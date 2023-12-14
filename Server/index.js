@@ -36,13 +36,20 @@ io.on("connection", (socket) => {  //1
         // io = for all circit message goes
      io.emit('sendMessage',{ user: users[socket.id],message,id})
     })
-    socket.emit('Welcome', { user: 'Admin', message: `Welcome to the chat` }) //3
+    socket.emit('Welcome', { user: 'Admin ', message: `Welcome to the chat` }) //3
     // broadcast = message send for all other users not you  
     socket.on('disconnect',() => { //4
         socket.broadcast.emit('leave',{user:"Admin",message:`${users[socket.id]} has left`})
         console.log('user left')
-        
     })
+    // socket.on('disconnect', () => {
+    //     const leftUser = users[socket.id];
+    //     if (leftUser) {
+    //         delete users[socket.id];
+    //         io.emit('userLeft', { user: "Admin", message: `${leftUser} has left the chat` });
+    //     }
+    // });
+    
 })
 sever.listen(port, () => {
     console.log("server is working on Local Host:" + port)
